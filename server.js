@@ -1,5 +1,6 @@
 const http = require('http'),
-    url = require('url');
+    url = require('url'),
+    fs = require('fs');
 
 http.createServer((request, response) => {
     let addr = request.url, 
@@ -20,6 +21,14 @@ http.createServer((request, response) => {
     response.writeHead(200, { 'Content-Type': 'text/html' });
     response.write(data);
     response.end();
+
+    fs.appendFile('log.txt', 'URL: ' + addr + '\nTimestamp: ' + new Date() + '\n\n', (err) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log('Added to log.')
+        }
+    });
 
   });
 
