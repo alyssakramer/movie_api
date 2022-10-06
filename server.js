@@ -23,11 +23,11 @@ http.createServer((request, response) => {
     response.end();
 
     fs.appendFile('log.txt', 'URL: ' + addr + '\nTimestamp: ' + new Date() + '\n\n', (err) => {
-      if (err) {
-          console.log(err);
-      } else {
-          console.log('Added to log.')
-      }
+        if (err) {
+            console.log(err);
+        } else {
+            console.log('Added to log.')
+        }
     });
 
   });
