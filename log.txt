@@ -25,3 +25,9 @@ Timestamp: Thu Oct 06 2022 08:17:39 GMT-0700 (Pacific Daylight Time)
 URL: /favicon.ico
 Timestamp: Thu Oct 06 2022 08:17:39 GMT-0700 (Pacific Daylight Time)
 
+::ffff:127.0.0.1 - - [12/Oct/2022:18:09:24 +0000] "GET / HTTP/1.1" 200 22
+::ffff:127.0.0.1 - - [12/Oct/2022:18:09:24 +0000] "GET /favicon.ico HTTP/1.1" 404 150
+::ffff:127.0.0.1 - - [12/Oct/2022:18:09:44 +0000] "GET /documentation HTTP/1.1" 500 16
+::ffff:127.0.0.1 - - [12/Oct/2022:18:10:33 +0000] "GET /documentation HTTP/1.1" 500 16
+::ffff:127.0.0.1 - - [12/Oct/2022:18:10:35 +0000] "GET /documentation HTTP/1.1" 500 16
+::ffff:127.0.0.1 - - [12/Oct/2022:18:10:46 +0000] "GET /movies HTTP/1.1" 200 249
