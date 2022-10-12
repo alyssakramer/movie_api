@@ -1,8 +1,27 @@
-const express = requite("express");
-    morgan = require('morgan')
+const express = require('express');
+const morgan = require('morgan')
 
 const app = express();
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'})
+
+let topMovies = [
+    {
+        title: 'Shawshank Redemption', 
+        director: 'Frank Darabont'
+    },
+    {
+        title: 'The Godfather',
+        director: 'Francis Ford Coppola'
+    },
+    {
+        title: 'The Dark Knight',
+        director: 'Christopher Nolan'  
+    }, 
+    {
+        title: 'The Godfather Part II',
+        director: 'Francis Ford Coppola'
+    }
+]
 
 app.use(morgan('common', {stream: accessLogStream}));
 
@@ -13,7 +32,10 @@ app.get('/movies', (req, res) => {
 app.get('/', (req, res) => {
 res.send('Welcome to myFlix App!');
 });
-app.use('/documentation.html', express.static('public'));
+
+app.get('/documentation', (req, res) => {
+    res.sendFile(__dirname + ('/documentation'));
+});
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
