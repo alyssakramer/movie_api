@@ -1,5 +1,7 @@
 const express = require('express');
-const morgan = require('morgan')
+const morgan = require('morgan');
+const fs = require('fs');
+const path = require('path'); 
 
 const app = express();
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'})
@@ -34,7 +36,7 @@ res.send('Welcome to myFlix App!');
 });
 
 app.get('/documentation', (req, res) => {
-    res.sendFile(__dirname + ('/documentation'));
+    res.sendFile(__dirname + ('/documentation.html'));
 });
 
 app.use((err, req, res, next) => {
