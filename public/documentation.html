@@ -12,10 +12,23 @@
     <h1>Documentation 
     </h1>
     <p> 
-        The server-side component of a "movie" web application. The web
-        application will provide users with access to information about different
-        movies, directors, and genres. Users will be able to sign up, update their
-        personal information, and create a list of their favorite movies.        
+      Request: Return a list of ALL movies to the user; URL: /movies; HTTP method: GET
+
+      Request: Return data (description, genre, director, image URL, whether it\’s featured or not) about a single movie by title to the user; URL: /movies/[ID]; HTTP method: GET
+      
+      Requests: Return data about a genre (description) by name/title (e.g., “Thriller”); URL: /genre/[ID]; HTTP method: GET
+      
+      Requests: Return data about a director (bio, birth year, death year) by name; URL: /director/[ID]; HTTP method: GET
+
+      Requests: Allow new users to register;  URL: /user; HTTP method: POST
+
+      Requests: Allow users to update their user info (username);  URL: /user/[ID]/[UserInfo]; HTTP method: PUT
+
+      Requests: Allow users to add a movie to their list of favorites (showing only a text that a movie has been added—more on this later);  URL: /user/[ID]/[Movies]/[Favorites]; HTTP method: POST
+
+      Requests: Allow users to remove a movie from their list of favorites (showing only a text that a movie has been removed—more on this later); URL: /user/[ID]/[Movies]/[Favorites]; HTTP method: DELETE
+
+      Requests: Allow existing users to deregister (showing only a text that a user email has been removed—more on this later);  URL: /user; HTTP method: DELETE      
     </p>
   </body>
 </html>
