@@ -56,12 +56,47 @@ app.get('/genre/:name', (req, res) => {
 // Gets the data about a single director, by name
 
 app.get('/directors/:name', (req, res) => {
-    res.send('Successful GET request returning data on specific director')
+    res.send('Successful GET request returning data on specific director');
   });
 
 app.get('/documentation', (req, res) => {
     res.sendFile(__dirname + ('/documentation.html'));
 });
+
+app.post('/user', (req, res) => {
+    let newUser = req.body
+
+    if (!newUser.name) {
+        const message = 'Missing name in request body';
+        res.status(400).send(message);
+      } else {
+        newUser.id = uuid.v4();
+        users.push(newUser);
+        res.status(201).send(newUser);
+      }
+});
+
+app.put('user/:id/:info', (req, res) => {
+    res.send('Successful PUT request updating users infomation');
+});
+
+app.post('user/:id/:movies/:favorites', (req, res) => {
+    res.send('Successful POST request adding favorite to users movies');
+});
+
+app.delete('users/:id/:movies/:favorite', (req, res) => {
+    res.send('Successful DELETE request removing movie from users favorites')
+});
+
+// Deletes a student from our list by ID
+app.delete('/users/:id', (req, res) => {
+    let user = users.find((user) => { return user.id === req.params.id });
+  
+    if (user) {
+      users = users.filter((obj) => { return obj.id !== req.params.id });
+      res.status(201).send('User ' + req.params.id + ' was deleted.');
+    }
+  });
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
