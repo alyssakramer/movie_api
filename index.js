@@ -10,6 +10,11 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {f
 
 app.use(bodyParser.json());
 
+let user = {
+  id: 1,
+  name: 'Alyssa K'
+}
+
 let topMovies = [
     {
         id : 1,
@@ -33,7 +38,7 @@ let topMovies = [
     }
 ]
 
-app.use(morgan('common', {stream: accessLogStream}));
+app.use(morgan('common', {stream: accessLogStream}))
 
 // Gets the list of data about ALL  top movies  
 app.get('/movies', (req, res) => {
@@ -43,13 +48,13 @@ app.get('/movies', (req, res) => {
 // Gets the data about a single student, by name
 
 app.get('/movies/:name', (req, res) => {
-    res.json(movies.find((movie) =>
+    res.json(topMovies.find((movie) =>
       { return movie.name === req.params.name }));
   });
 
 // Gets the data about a single genre, by name
 
-app.get('/genre/:name', (req, res) => {
+app.get('/genre', (req, res) => {
     res.send('Successful GET request returning data on all genres');
   });
 
@@ -84,13 +89,13 @@ app.post('user/:id/:movies/:favorites', (req, res) => {
     res.send('Successful POST request adding favorite to users movies');
 });
 
-app.delete('users/:id/:movies/:favorite', (req, res) => {
+app.delete('user/:id/:movies/:favorite', (req, res) => {
     res.send('Successful DELETE request removing movie from users favorites')
 });
 
-// Deletes a student from our list by ID
-app.delete('/users/:id', (req, res) => {
-    let user = users.find((user) => { return user.id === req.params.id });
+// Deletes a user from our list by ID
+app.delete('/user/:id', (req, res) => {
+    let user = user.find((user) => { return user.id === req.params.id });
   
     if (user) {
       users = users.filter((obj) => { return obj.id !== req.params.id });
@@ -103,7 +108,7 @@ app.use((err, req, res, next) => {
     res.status(500).send('App not working!');
 });
 
-app.listen(3000, () => {
-    console.log('My Node is running on Port 3000.');
+app.listen(3001, () => {
+    console.log('My Node is running on Port 3001.');
 });
 
