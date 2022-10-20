@@ -12,7 +12,10 @@ app.use(bodyParser.json());
 
 let user = {
   id: 1,
-  name: 'Alyssa K'
+  name: 'Alyssa K',
+  username: 'akramer',
+  password: '1234',
+  email: 'ak@gmail.com'
 }
 
 let topMovies = [
@@ -54,7 +57,7 @@ app.get('/movies/:name', (req, res) => {
 
 // Gets the data about a single genre, by name
 
-app.get('/genre', (req, res) => {
+app.get('/genre/:name', (req, res) => {
     res.send('Successful GET request returning data on all genres');
   });
 
@@ -65,7 +68,7 @@ app.get('/directors/:name', (req, res) => {
   });
 
 app.get('/documentation', (req, res) => {
-    res.sendFile(__dirname + ('/documentation.html'));
+    res.sendFile(__dirname + ('/public/documentation.html'));
 });
 
 app.post('/user', (req, res) => {
@@ -81,15 +84,15 @@ app.post('/user', (req, res) => {
       }
 });
 
-app.put('user/:id/:info', (req, res) => {
+app.put('/user/:name/:username', (req, res) => {
     res.send('Successful PUT request updating users infomation');
 });
 
-app.post('user/:id/:movies/:favorites', (req, res) => {
+app.post('/user/:id/:movies/:favorites', (req, res) => {
     res.send('Successful POST request adding favorite to users movies');
 });
 
-app.delete('user/:id/:movies/:favorite', (req, res) => {
+app.delete('/user/:id/:movies/:favorite', (req, res) => {
     res.send('Successful DELETE request removing movie from users favorites')
 });
 
