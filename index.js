@@ -17,37 +17,6 @@ mongoose.connect('mongodb://localhost:27017/MyFlixDB', {useNewUrlParser: true, u
 
 app.use(bodyParser.json());
 
-let user = {
-  id: 1,
-  name: 'Alyssa K',
-  username: 'akramer',
-  password: '1234',
-  email: 'ak@gmail.com'
-}
-
-let topMovies = [
-    {
-        id : 1,
-        title: 'Shawshank Redemption', 
-        director: 'Frank Darabont'
-    },
-    {
-        id: 2,
-        title: 'The Godfather',
-        director: 'Francis Ford Coppola'
-    },
-    {
-        id: 3, 
-        title: 'The Dark Knight',
-        director: 'Christopher Nolan'  
-    }, 
-    {
-        id: 4, 
-        title: 'The Godfather Part II',
-        director: 'Francis Ford Coppola'
-    }
-]
-
 app.use(morgan('common', {stream: accessLogStream}))
 
 // Get all movies  
@@ -67,7 +36,7 @@ app.get('/movies', (req, res) => {
 app.get('/movies/:title', (req, res) => {
   Movies.findOne({ 'Movie.Title': req.params.Title })
     .then((movie) => {
-      res.json(movie);
+      res.json(movies);
     })
     .catch((err) => {
       console.error(err);
@@ -79,7 +48,7 @@ app.get('/movies/:title', (req, res) => {
 app.get('/genre/:name', (req, res) => {
   Movies.find({ 'Genre.Name': req.params.Name })
     .then((movie) => {
-      res.json(movie);
+      res.json(movies);
     })
     .catch((err) => {
       console.error(err);
@@ -91,7 +60,7 @@ app.get('/genre/:name', (req, res) => {
 app.get('/directors/:name', (req, res) => {
     Movies.findOne({ 'Director.Name': req.params.Name })
       .then((movie) => {
-        res.json(movie);
+        res.json(movies);
       })
       .catch((err) => {
         console.error(err);
