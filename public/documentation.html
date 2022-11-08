@@ -9,26 +9,135 @@
 
   </head>
   <body>
-    <h1>Documentation 
-    </h1>
-    <p> 
-      Request: Return a list of ALL movies to the user; URL: /movies; HTTP method: GET
+    <header> 
+      <h1>Movie API Documentation</h1>
+    </header>
+    <div>
+      <h1>My Flix</h1>
+      <p>
+        The web application will provide users with access to information about different movies, directors, and genres. Users will be able to sign up, update their personal information, and create a list of their favorite movies
+      </p>
 
-      Request: Return data (description, genre, director, image URL, whether it\’s featured or not) about a single movie by title to the user; URL: /movies/[ID]; HTTP method: GET
-      
-      Requests: Return data about a genre (description) by name/title (e.g., “Thriller”); URL: /genre/[ID]; HTTP method: GET
-      
-      Requests: Return data about a director (bio, birth year, death year) by name; URL: /director/[ID]; HTTP method: GET
+      <h2>Features</h2>
+      <ol>
+        <li>Return a list of ALL movies to the user</li>
+        <li>Return data about a single movie by title to the user</li>
+        <li>Return data about a genre by name</li>
+        <li>Return data about a director by name</li>
+        <li>Allow user to register</li>
+        <li>Allow user to update their user info</li>
+        <li>Allow user to add omvies to their favorites list</li>
+        <li>Allow users to remove a movie from their favorites list</li>
+        <li>Allow user to deregister account</li>
+      </ol>
+    </div>
 
-      Requests: Allow new users to register;  URL: /user; HTTP method: POST
+    <h2> API Endpoints</h2>
 
-      Requests: Allow users to update their user info (username);  URL: /user/[ID]/[Info]; HTTP method: PUT
+    <table class="table">
+  
+     <tbody>
+      <tr>
+        <th>Request</th>
+        <th>URL</th>
+        <th>HTTP Method</th>
+        <th>Query Parameters</th>
+        <th>Format of data for Request</th>
+        <th>Format of Data for Response</th>
+      </tr>
 
-      Requests: Allow users to add a movie to their list of favorites (showing only a text that a movie has been added—more on this later);  URL: /user/[ID]/[Movies]/[Favorites]; HTTP method: POST
+      <tr>
+        <td>Get list of all movies</td>
+        <td>/movies</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>None</td>
+        <td>A JSON object holding data about all the movies {title: "Shawshank Redemption", Director: "Frank Darabont"}</td>
+      </tr>
 
-      Requests: Allow users to remove a movie from their list of favorites (showing only a text that a movie has been removed—more on this later); URL: /user/[ID]/[Movies]/[Favorites]; HTTP method: DELETE
+      <tr>
+        <td>Get a single movie by name</td>
+        <td>/movies/:title</td>
+        <td>GET</td>
+        <td>Movie name</td>
+        <td>None</td>
+        <td>A JSON object holding data about a specific movie</td>
+      </tr>
 
-      Requests: Allow existing users to deregister (showing only a text that a user email has been removed—more on this later);  URL: /user; HTTP method: DELETE      
-    </p>
+      <tr>
+        <td>Get a single genre by name</td>
+        <td>/genre/:name</td>
+        <td>GET</td>
+        <td>Genre name</td>
+        <td>None</td>
+        <td>A JSON object holding data about a specific genre</td>
+      </tr>
+
+      <tr>
+        <td>Get a single director by name</td>
+        <td>/director/:name</td>
+        <td>GET</td>
+        <td>Director name</td>
+        <td>None</td>
+        <td>A JSON object holding data about a specific director</td>
+      </tr>
+
+      <tr>
+        <td>Get a single user by name</td>
+        <td>/user/:Username</td>
+        <td>GET</td>
+        <td>User name</td>
+        <td>None</td>
+        <td>A JSON object holding data about a specific user</td>
+      </tr>
+
+      <tr>
+        <td>Allow users to register</td>
+        <td>/users</td>
+        <td>POST</td>
+        <td>None</td>
+        <td>A JSON object holding data about the user to add {name: 'Sam Lawn', username: 'Sam$'', password: 'coolcats5', email: 'SamLawn@gmail.com'}</td>
+        <td>A JSON object holding data abuot the added user, including ID {id: 2, name: 'Sam Lawn', username: 'Sam$'', password: 'coolcats5', email: 'SamLawn@gmail.com'}</td>
+      </tr>
+
+      <tr>
+        <td>Allow users to update their info</td>
+        <td>/user/:Username</td>
+        <td>PUT</td>
+        <td>User name</td>
+        <td>A JSON object holding data about the info to be updated</td>
+        <td> A JSON object holding data that has been updated</td>
+      </tr>
+
+      <tr>
+        <td>Allow user to add movie to favorites list</td>
+        <td>/user/:Username/:movies/MovieID</td>
+        <td>PUT</td>
+        <td>User and movie name</td>
+        <td>None</td>
+        <td>A JSON object hodling data about the movie added</td>
+      </tr>
+
+      <tr>
+        <td>Allow users to delete movie from favorites list</td>
+        <td>/user/:Username/:movies/MovieID</td>
+        <td>DELETE</td>
+        <td>User and movie name</td>
+        <td>None</td>
+        <td>A JSON object holding data about the movie that was deleted</td>
+      </tr>
+
+      <tr>
+        <td>Allow users to deregister</td>
+        <td>/user/Username</td>
+        <td>DELETE</td>
+        <td>User name</td>
+        <td>A JSON object about the user that will be deleted</td>
+        <td>A text message indicating with the user delete</td>
+      </tr>
+
+     </tbody>
+    </table>
+
   </body>
 </html>
