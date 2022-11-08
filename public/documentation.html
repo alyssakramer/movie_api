@@ -57,7 +57,7 @@
 
       <tr>
         <td>Get a single movie by name</td>
-        <td>/movies/:name</td>
+        <td>/movies/:title</td>
         <td>GET</td>
         <td>Movie name</td>
         <td>None</td>
@@ -83,8 +83,17 @@
       </tr>
 
       <tr>
+        <td>Get a single user by name</td>
+        <td>/user/:Username</td>
+        <td>GET</td>
+        <td>User name</td>
+        <td>None</td>
+        <td>A JSON object holding data about a specific user</td>
+      </tr>
+
+      <tr>
         <td>Allow users to register</td>
-        <td>/user</td>
+        <td>/users</td>
         <td>POST</td>
         <td>None</td>
         <td>A JSON object holding data about the user to add {name: 'Sam Lawn', username: 'Sam$'', password: 'coolcats5', email: 'SamLawn@gmail.com'}</td>
@@ -93,7 +102,7 @@
 
       <tr>
         <td>Allow users to update their info</td>
-        <td>/user/:info</td>
+        <td>/user/:Username</td>
         <td>PUT</td>
         <td>User name</td>
         <td>A JSON object holding data about the info to be updated</td>
@@ -102,7 +111,7 @@
 
       <tr>
         <td>Allow user to add movie to favorites list</td>
-        <td>/user/:name/:movies/:favorites</td>
+        <td>/user/:Username/:movies/MovieID</td>
         <td>PUT</td>
         <td>User and movie name</td>
         <td>None</td>
@@ -111,7 +120,7 @@
 
       <tr>
         <td>Allow users to delete movie from favorites list</td>
-        <td>/user/:name/:movies/:favorites</td>
+        <td>/user/:Username/:movies/MovieID</td>
         <td>DELETE</td>
         <td>User and movie name</td>
         <td>None</td>
@@ -120,7 +129,7 @@
 
       <tr>
         <td>Allow users to deregister</td>
-        <td>/user</td>
+        <td>/user/Username</td>
         <td>DELETE</td>
         <td>User name</td>
         <td>A JSON object about the user that will be deleted</td>
