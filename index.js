@@ -7,8 +7,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Models = require('./models.js');
 
-const Movies = Model.Movie;
-const Users = Model.User; 
+const Movies = Models.Movie;
+const Users = Models.User; 
 
 const app = express();
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'})
@@ -62,7 +62,7 @@ app.get('/movies', (req, res) => {
       });
   });
 
-// Gets the data about a single student, by name
+
 
 app.get('/movies/:title', (req, res) => {
   Movies.findOne({ 'Movie.Title': req.params.Title })
@@ -112,6 +112,38 @@ app.get('/users', (req, res) => {
       .catch((err) => {
         res.status(500).send('Error: ' + err);
       });
+});
+
+// Update a user's info, by username
+/* We’ll expect JSON in this format
+{
+  Username: String,
+  (required)
+  Password: String,
+  (required)
+  Email: String,
+  (required)
+  Birthday: Date
+}*/
+app.put('/users/:Username', (req, res) => {
+  Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
+    {
+      Name: req.body.Name, 
+      Username: req.body.Username,
+      Password: req.body.Password,
+      Email: req.body.Email,
+      Birthday: req.body.Birthday
+    }
+  },
+  { new: true }, // This line makes sure that the updated document is returned
+  (err, updatedUser) => {
+    if(err) {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    } else {
+      res.json(updatedUser);
+    }
+  });
 });
 
 app.get('/users/:Username', (req, res) => {
@@ -178,7 +210,7 @@ app.post('/users', (req, res) =>{
             Username: req.body.Username,
             Password: req.body.Password, 
             Email: req.body.Email, 
-             Birthday: req.body.Birthday
+            Birthday: req.body.Birthday
           })
           .then((user) => {res.status(201).json(user) })
         .catch((error) => {
