@@ -17,7 +17,14 @@ mongoose.connect('mongodb://localhost:27017/MyFlixDB', {useNewUrlParser: true, u
 
 app.use(bodyParser.json());
 
+app.use(bodyParser.urlencoded({ extended: true}));
+
 app.use(morgan('common', {stream: accessLogStream}))
+
+let auth = require('./auth')(app);
+
+const passport = require('passport');
+require('./passport')
 
 // Get all movies  
 app.get('/movies', (req, res) => {
