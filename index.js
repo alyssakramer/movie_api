@@ -12,13 +12,20 @@ const Users = Models.User;
 
 const app = express();
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'})
-
+mongoose.connect('mongodb://localhost:27017/MyFlixDB', { useNewUrlParser: true})
+.then(() => console.log('mongodb connected'))
 app.use(bodyParser.json());
 
 app.use(morgan('common', {stream: accessLogStream}))
 
+let auth = require('./auth')(app)
+
+const passport = require('passport')
+require('./passport')
+
 // Get all movies  
-app.get('/movies', (req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false}),
+(req, res) => {
     Movies.find()
       .then((movies) => {
         res.status(201).json(movies);
@@ -31,7 +38,8 @@ app.get('/movies', (req, res) => {
 
 
 
-app.get('/movies/:title', (req, res) => {
+app.get('/movies/:title', passport.authenticate('jwt', { session: false}), 
+(req, res) => {
   Movies.findOne({ 'Movie.Title': req.params.Title })
     .then((movie) => {
       res.json(movies);
@@ -43,7 +51,8 @@ app.get('/movies/:title', (req, res) => {
   });
 
 // Gets the data about a single genre, by name
-app.get('/genre/:name', (req, res) => {
+app.get('/genre/:name', passport.authenticate('jwt', { session: false}),
+(req, res) => {
   Movies.find({ 'Genre.Name': req.params.Name })
     .then((movie) => {
       res.json(movies);
@@ -55,7 +64,8 @@ app.get('/genre/:name', (req, res) => {
   });
 
 // Gets the data about a single director, by name
-app.get('/directors/:name', (req, res) => {
+app.get('/directors/:name', passport.authenticate('jwt', { session: false}), 
+(req, res) => {
     Movies.findOne({ 'Director.Name': req.params.Name })
       .then((movie) => {
         res.json(movies);
@@ -176,7 +186,7 @@ app.post('/users', (req, res) =>{
           .create({
             Name: req.body.Name,
             Username: req.body.Username,
-            Password: req.body.Password, 
+            Password: Users.hashPassword(req.body.Password), 
             Email: req.body.Email, 
             Birthday: req.body.Birthday
           })
