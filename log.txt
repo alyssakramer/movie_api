@@ -114,3 +114,10 @@ Timestamp: Thu Oct 06 2022 08:17:39 GMT-0700 (Pacific Daylight Time)
 ::1 - - [20/Oct/2022:20:51:25 +0000] "GET /genre/name HTTP/1.1" 200 51
 ::1 - - [20/Oct/2022:20:51:34 +0000] "GET /director/name HTTP/1.1" 404 152
 ::1 - - [20/Oct/2022:20:51:41 +0000] "GET /directors/name HTTP/1.1" 200 58
+::1 - - [15/Nov/2022:14:59:19 +0000] "POST /users HTTP/1.1" 401 -
+::1 - - [15/Nov/2022:15:00:31 +0000] "POST /users HTTP/1.1" 500 83
+::1 - - [15/Nov/2022:15:01:14 +0000] "POST /users HTTP/1.1" 500 54
+::1 - - [15/Nov/2022:15:01:35 +0000] "POST /users HTTP/1.1" 500 115
+::1 - - [15/Nov/2022:15:04:44 +0000] "POST /users HTTP/1.1" 201 180
+::1 - - [15/Nov/2022:15:06:25 +0000] "POST /users HTTP/1.1" 201 234
+::1 - - [15/Nov/2022:15:08:27 +0000] "POST /login HTTP/1.1" 200 713
