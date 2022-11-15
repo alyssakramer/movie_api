@@ -13,7 +13,7 @@ const Users = Models.User;
 const app = express();
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'})
 
-mongoose.connect('mongodb://localhost:27017/MyFlixDB', {useNewUrlParser: true, useUnifiedTopology: true}); 
+mongoose.connect('mongodb://127.0.0.1:27017/MyFlixDB', {useNewUrlParser: true, useUnifiedTopology: true}); 
 
 app.use(bodyParser.json());
 
@@ -201,7 +201,8 @@ app.delete('/user/:Username', passport.authenticate('jwt', { session: false}),
   Email: String, 
   Birthday: Date
 }*/
-app.post('/users', passport.authenticate('jwt', { session: false}), 
+// passport.authenticate('jwt', { session: false}), if this is here no one will be able to signup
+app.post('/users', 
 (req, res) =>{
   Users.findOne({ Username: req.body.Username })
     .then((user) => {
@@ -212,7 +213,7 @@ app.post('/users', passport.authenticate('jwt', { session: false}),
           .create({
             Name: req.body.Name,
             Username: req.body.Username,
-            Password: req.body.Password, 
+            Password: Users.hashPassword(req.body.Password), 
             Email: req.body.Email, 
             Birthday: req.body.Birthday
           })
