@@ -208,7 +208,7 @@ app.delete('/user/:Username', (req, res) => {
       res.status(500).send('Error ' + err);
     })
   });
-});
+
 //npm run dev
 // Delete movie from users favorites list
 app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false}), 
