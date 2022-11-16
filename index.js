@@ -20,8 +20,13 @@ app.use(morgan('common', {stream: accessLogStream}))
 
 let auth = require('./auth')(app)
 
+const cors = require('cors'); 
+app.use(cors());
+
 const passport = require('passport')
 require('./passport')
+
+const { check, validationResult } = require('express-validator')
 
 // Get all movies  
 app.get('/movies', passport.authenticate('jwt', { session: false}),
@@ -103,7 +108,19 @@ app.get('/users', (req, res) => {
   (required)
   Birthday: Date
 }*/
-app.put('/users/:Username', (req, res) => {
+app.put('/users/:Username', [
+  check('Username', 'Username is required').isLength({min: 5}),
+  check('Username', 'Username contains non alphanumeric characters - not allowed').isAlphanumeric(), 
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email does not appear to be valid').isEmail()
+],
+ (req, res) => {
+  let errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors : errors.array() });
+  }
+
   Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
     {
       Name: req.body.Name, 
@@ -176,7 +193,19 @@ app.delete('/user/:Username/:movies/MovieID:', (req, res) => {
   Email: String, 
   Birthday: Date
 }*/
-app.post('/users', (req, res) =>{
+app.post('/users', [
+  check('Username', 'Username is required').isLength({min: 5}),
+  check('Username', 'Username contains non alphanumeric characters - not allowed').isAlphanumeric(), 
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email does not appear to be valid').isEmail()
+], (req, res) => {
+  let errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors : errors.array() });
+  }
+
+  let hashedPassword = Users.hashPassword(req.body.Password);
   Users.findOne({ Username: req.body.Username })
     .then((user) => {
       if(user) {
@@ -254,51 +283,13 @@ app.delete('/user/:Username', passport.authenticate('jwt', { session: false}),
    })
  });
 
-// Add a user 
-/* We'll use JSON format 
-{
-  ID: Integer, 
-  Name: String, 
-  Username: String, 
-  Password: String, 
-  Email: String, 
-  Birthday: Date
-}*/
-// passport.authenticate('jwt', { session: false}), if this is here no one will be able to signup
-app.post('/users', 
-(req, res) =>{
-  Users.findOne({ Username: req.body.Username })
-    .then((user) => {
-      if(user) {
-        return res.status(400).send(req.body.Username + 'already exists');
-      } else {
-        Users
-          .create({
-            Name: req.body.Name,
-            Username: req.body.Username,
-            Password: Users.hashPassword(req.body.Password), 
-            Email: req.body.Email, 
-            Birthday: req.body.Birthday
-          })
-          .then((user) => {res.status(201).json(user) })
-        .catch((error) => {
-          console.error(error);
-          res.status(500).send('Error: ' + error);
-        })
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send('Error: ' + error);
-    });
-});
-
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('App not working!');
 });
 
-app.listen(3001, () => {
-    console.log('My Node is running on Port 3001.');
+const port = process.env.PORT || 3001;
+app.listen(port, '0.0.0.0', () => {
+    console.log('Listening on Port ' + port);
 });
 
