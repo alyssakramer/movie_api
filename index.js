@@ -12,8 +12,11 @@ const Users = Models.User;
 
 const app = express();
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'})
-mongoose.connect('mongodb://localhost:27017/MyFlixDB', { useNewUrlParser: true})
-.then(() => console.log('mongodb connected'))
+//mongoose.connect('mongodb://localhost:27017/MyFlixDB', { useNewUrlParser: true})
+//.then(() => console.log('mongodb connected'))
+
+mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true }); 
+
 app.use(bodyParser.json());
 
 app.use(morgan('common', {stream: accessLogStream}))
@@ -293,3 +296,4 @@ app.listen(port, '0.0.0.0', () => {
     console.log('Listening on Port ' + port);
 });
 
+// mongoimport --uri mongodb+srv://akramer99:Maddog0925!@myflixdb.pzrs28t.mongodb.net/MyFlixDB --collection movies --type json --file C:\Users\madel\OneDrive\Documents\Career Foundry Web Development\Career Foundry Web Development\Achievment 2
