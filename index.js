@@ -6,6 +6,7 @@ const uuid = require('uuid');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Models = require('./models.js');
+  require('dotenv').config();
 
 const Movies = Models.Movie;
 const Users = Models.User; 
@@ -15,7 +16,8 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {f
 //mongoose.connect('mongodb://localhost:27017/MyFlixDB', { useNewUrlParser: true})
 //.then(() => console.log('mongodb connected'))
 
-mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true }); 
+mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+.then(() => console.log('mongodb running')).catch(e => console.log('mongodb failed to run')); 
 
 app.use(bodyParser.json());
 
