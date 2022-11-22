@@ -33,6 +33,10 @@ require('./passport')
 
 const { check, validationResult } = require('express-validator')
 
+app.get ("/", (req, res) => {
+  res.send ("Welcome to the My Flix");
+});
+
 // Get all movies  
 app.get('/movies', passport.authenticate('jwt', { session: false}),
 (req, res) => {
