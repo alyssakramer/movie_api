@@ -48,10 +48,10 @@ app.get('/movies', passport.authenticate('jwt', { session: false}),
 
 
 
-app.get('/movies/:title', passport.authenticate('jwt', { session: false}), 
+app.get('/movies/:Title', passport.authenticate('jwt', { session: false}), 
 (req, res) => {
   Movies.findOne({ 'Movie.Title': req.params.Title })
-    .then((movie) => {
+    .then((movies) => {
       res.json(movies);
     })
     .catch((err) => {
@@ -61,10 +61,10 @@ app.get('/movies/:title', passport.authenticate('jwt', { session: false}),
   });
 
 // Gets the data about a single genre, by name
-app.get('/genre/:name', passport.authenticate('jwt', { session: false}),
+app.get('/genre/:Name', passport.authenticate('jwt', { session: false}),
 (req, res) => {
   Movies.find({ 'Genre.Name': req.params.Name })
-    .then((movie) => {
+    .then((movies) => {
       res.json(movies);
     })
     .catch((err) => {
@@ -74,10 +74,10 @@ app.get('/genre/:name', passport.authenticate('jwt', { session: false}),
   });
 
 // Gets the data about a single director, by name
-app.get('/directors/:name', passport.authenticate('jwt', { session: false}), 
+app.get('/directors/:Name', passport.authenticate('jwt', { session: false}), 
 (req, res) => {
     Movies.findOne({ 'Director.Name': req.params.Name })
-      .then((movie) => {
+      .then((movies) => {
         res.json(movies);
       })
       .catch((err) => {
@@ -220,7 +220,7 @@ app.post('/users', [
           .create({
             Name: req.body.Name,
             Username: req.body.Username,
-            Password: Users.hashPassword(req.body.Password), 
+            Password: hashPassword, 
             Email: req.body.Email, 
             Birthday: req.body.Birthday
           })
