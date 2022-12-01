@@ -41,7 +41,7 @@ app.get ("/", (req, res) => {
 app.get('/movies', function (req, res) {
     Movies.find()
       .then((movies) => {
-        res.status(201).json(movies);
+        res.status(200).json(movies);
       })
       .catch((err) =>{
         console.error(err);
@@ -89,16 +89,16 @@ app.get('/directors/:Name', passport.authenticate('jwt', { session: false}),
       });
   });
 
-app.get('/documentation', passport.authenticate('jwt', { session: false}),
- (req, res) => {
+app.get('/documentation', (req, res) => {
     res.sendFile(__dirname + ('/public/documentation.html'));
 });
 
 // Get all users 
-app.get('/users', (req, res) => {
+app.get('/users', passport.authenticate('jwt', { session: false}),
+(req, res) => {
     Users.find()
       .then((users) => {
-        res.status(201).json(users);
+        res.status(200).json(users);
       })
       .catch((err) => {
         res.status(500).send('Error: ' + err);
@@ -223,7 +223,7 @@ app.post('/users', [
           .create({
             Name: req.body.Name,
             Username: req.body.Username,
-            Password: hashPassword, 
+            Password: hashedPassword, 
             Email: req.body.Email, 
             Birthday: req.body.Birthday
           })
