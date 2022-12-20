@@ -150,7 +150,7 @@ app.put('/users/:Username', [
 });
 
 app.get('/users/:Username', (req, res) => {
-  Users.findOne({ Username: req.params.Username })
+  Users.findOne({ Username: req.params.Username }).populate("FavoriteMovies")
   .then((user) => {
     res.json(user);
   })
